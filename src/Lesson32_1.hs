@@ -19,6 +19,7 @@ data Student = Student
   , gradeLevel :: GradeLevel
   , studentName :: Name } deriving Show
 
+
 students :: [Student]
 students = [ Student 1 Senior (Name "Audre" "Lorde")
            , Student 2 Junior (Name "Leslie" "Silko")
@@ -51,7 +52,6 @@ teachers :: [Teacher]
 teachers = [ Teacher 100 (Name "Simone" "De Beauvior")
            , Teacher 200 (Name "Susan" "Sontag")]
 
-
 data Course = Course
   { courseId :: Int
   , courseTitle :: String
@@ -69,8 +69,8 @@ _join data1 data2 prop1 prop2 = do
   guard ((prop1 (fst dpairs)) == (prop2 (snd dpairs)))
   return dpairs
 
-joinData = (_join teachers courses teacherId teacher)
-whereResult = _where ((== "English") . courseTitle . snd) joinData
+joinData = (_join teachers courses teacherId teacher) :: [(Teacher, Course)]
+whereResult = _where ((== "English") . courseTitle . snd) joinData :: [(Teacher, Course)]
 selectResult = _select (teacherName . fst) whereResult
 
 _hinq selectQuery joinQuery whereQuery = (\joinData ->
